@@ -1,0 +1,66 @@
+@import url('https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+    color: white;
+    font-family: "Patrick Hand", cursive;
+}
+body {
+    background-color: #6e4f75;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    flex-direction: column;
+}
+h1 {
+    font-size: 48px;
+}
+transcribed-item {
+    background-color: rgba(0,0,0,0.2);
+    width: 60%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 32px;
+    border-radius: 20px;
+}
+transcribed-text {
+    display: block;
+    width: 40%;
+    max-height: calc(480px-24px-24px-24px);
+    overflow-y: scroll;
+    background-color: rgb(255, 245, 255);
+    color: black;
+    margin: 34px auto;
+    border-radius: 10px;
+    padding: 8px;
+}
+transcribed-header {
+    margin: 0 auto;
+    font-size: 24px;
+    margin:24px auto;
+}
+same-row {
+    flex-direction: row;
+    display: flex;
+    height: 386px;
+}
+transcribed-text::-webkit-scrollbar {
+    width: 10px;
+    border-radius: 10px;
+  }
+   
+  transcribed-text::-webkit-scrollbar-track {
+    background-color: #00000022;
+    border-radius: 10px;
+  }
+  transcribed-text::-webkit-scrollbar-thumb {
+    background-color: #00000099;
+    border-radius: 10px;
+  }
+  audio {
+    width: 70%;
+  }

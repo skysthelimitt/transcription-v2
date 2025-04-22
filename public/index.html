@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <script>
+        // to do:
+        // - add space to play file
+        document.addEventListener("DOMContentLoaded", async ()=>{
+            let transcriptions = await(await fetch("/uploads.json")).json();
+            // from mdn
+            // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort#sorting_array_of_objects
+            transcriptions.forEach(async element => {
+                let data = await(await fetch(`/uploads/${element}/data.json`)).json();
+                let item = document.createElement("transcribed-item");
+                let header = document.createElement("transcribed-header");
+                let row = document.createElement("same-row");
+                let transcription = document.createElement("transcribed-text");
+                let summary = document.createElement("transcribed-text");
+                let audio = document.createElement("audio");
+                audio.src = `/uploads/${element}/audio.ogg`;
+                audio.controls = true;
+                header.innerText = `${(new Date(data.date)).toLocaleString()}`;
+                transcription.innerText = data.transcription;
+                summary.innerText = data.summary;
+                row.appendChild(transcription);
+                row.appendChild(summary);
+                item.appendChild(header);
+                item.appendChild(audio);
+                item.appendChild(row);
+                document.body.appendChild(item);
+            });
+        })
+    </script>
+</head>
+<body>
+    <h1>Transcriptions</h1>
+    <!-- <transcribed-item>
+        <transcribed-header>
+            #1 - 01/01/01
+        </transcribed-header>
+        <same-row>
+            <transcribed-text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer quam libero, consequat sed nisi et, semper rutrum lectus. Nunc sagittis odio tellus, eu efficitur urna viverra quis. Nam id consequat turpis, eu bibendum libero. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Morbi aliquam est quam, ut sagittis nisl pellentesque sit amet. Quisque tempor faucibus porttitor. Ut sit amet nibh tellus. Nulla faucibus metus lorem, ut finibus odio euismod eget. Praesent posuere leo at nibh laoreet, sed condimentum mauris fermentum. In ultrices diam tristique nisl posuere hendrerit. In sit amet erat nec libero ornare imperdiet vitae ut magna. Quisque neque libero, volutpat at maximus id, mattis id quam. Praesent eget odio ornare, faucibus quam quis, varius leo. Morbi condimentum dapibus odio ac porttitor. Etiam erat odio, ultrices eget imperdiet vehicula, lacinia vel nibh. Ut sit amet nisi eget arcu maximus ultrices. Nunc sit amet erat non sapien tempus cursus vitae vitae orci. Aenean sed velit in metus porttitor porttitor. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; In iaculis nibh odio, id mollis nibh vehicula eget. Suspendisse potenti. Praesent vitae egestas arcu. In quis ipsum vitae orci pharetra volutpat. Duis tincidunt rhoncus sagittis. Donec laoreet, libero nec accumsan maximus, purus nisl auctor felis, id interdum nibh augue ut magna. Aenean condimentum augue a fermentum bibendum. Sed laoreet neque ut mauris commodo porttitor. Curabitur dictum ultrices metus, a tempus nibh egestas vel. Pellentesque efficitur lobortis nisi, ut condimentum diam tincidunt sit amet. Morbi eu hendrerit dolor. Nunc ultrices sem in libero feugiat, vitae faucibus lorem rhoncus. Proin mattis mi a dolor convallis accumsan. Cras tincidunt vestibulum erat, quis auctor erat. Duis venenatis bibendum nulla, a interdum diam finibus a. Pellentesque nec aliquam velit. Donec diam mi, porta nec cursus et, maximus sed erat. Donec fermentum sollicitudin pulvinar. Aliquam eget euismod dui. Nunc non metus et nunc porta dapibus ac eget nulla. Curabitur blandit iaculis posuere. Vestibulum eget sapien at nisi feugiat venenatis eu ac neque. Aenean placerat lacus nec auctor volutpat. Aenean massa quam, ultrices ut facilisis posuere, euismod ac ante. Nullam luctus sed nisi at commodo. Donec ante lorem, mattis sit amet justo nec, hendrerit tincidunt dolor.Phasellus tristique nibh vehicula massa egestas, quis sollicitudin tellus aliquam. Nulla non libero ut arcu egestas porttitor a eget nulla. Sed a diam ut lectus rutrum sagittis vitae a mi. Praesent consequat dapibus velit. Ut nec nulla et ligula varius maximus sit amet eget magna. Vestibulum eros felis, finibus et lacinia faucibus, hendrerit et sem. Etiam ac placerat eros. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Proin vitae eros vitae nibh faucibus rutrum vel id justo. Etiam lacus nibh, iaculis quis tincidunt quis, elementum vel nibh. Etiam viverra ligula eu elementum feugiat. In quis augue vehicula, vehicula risus non, mattis est. Cras egestas fringilla orci sit amet fermentum. Vestibulum hendrerit augue euismod, cursus leo et, mollis nunc.</transcribed-text>
+            <transcribed-text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer quam libero, consequat sed nisi et, semper rutrum lectus. Nunc sagittis odio tellus, eu efficitur urna viverra quis. Nam id consequat turpis, eu bibendum libero. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Morbi aliquam est quam, ut sagittis nisl pellentesque sit amet. Quisque tempor faucibus porttitor. Ut sit amet nibh tellus. Nulla faucibus metus lorem, ut finibus odio euismod eget. Praesent posuere leo at nibh laoreet, sed condimentum mauris fermentum. In ultrices diam tristique nisl posuere hendrerit. In sit amet erat nec libero ornare imperdiet vitae ut magna. Quisque neque libero, volutpat at maximus id, mattis id quam. Praesent eget odio ornare, faucibus quam quis, varius leo. Morbi condimentum dapibus odio ac porttitor. Etiam erat odio, ultrices eget imperdiet vehicula, lacinia vel nibh. Ut sit amet nisi eget arcu maximus ultrices. Nunc sit amet erat non sapien tempus cursus vitae vitae orci. Aenean sed velit in metus porttitor porttitor. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; In iaculis nibh odio, id mollis nibh vehicula eget. Suspendisse potenti. Praesent vitae egestas arcu. In quis ipsum vitae orci pharetra volutpat. Duis tincidunt rhoncus sagittis. Donec laoreet, libero nec accumsan maximus, purus nisl auctor felis, id interdum nibh augue ut magna. Aenean condimentum augue a fermentum bibendum. Sed laoreet neque ut mauris commodo porttitor. Curabitur dictum ultrices metus, a tempus nibh egestas vel. Pellentesque efficitur lobortis nisi, ut condimentum diam tincidunt sit amet. Morbi eu hendrerit dolor. Nunc ultrices sem in libero feugiat, vitae faucibus lorem rhoncus. Proin mattis mi a dolor convallis accumsan. Cras tincidunt vestibulum erat, quis auctor erat. Duis venenatis bibendum nulla, a interdum diam finibus a. Pellentesque nec aliquam velit. Donec diam mi, porta nec cursus et, maximus sed erat. Donec fermentum sollicitudin pulvinar. Aliquam eget euismod dui. Nunc non metus et nunc porta dapibus ac eget nulla. Curabitur blandit iaculis posuere. Vestibulum eget sapien at nisi feugiat venenatis eu ac neque. Aenean placerat lacus nec auctor volutpat. Aenean massa quam, ultrices ut facilisis posuere, euismod ac ante. Nullam luctus sed nisi at commodo. Donec ante lorem, mattis sit amet justo nec, hendrerit tincidunt dolor. Phasellus tristique nibh vehicula massa egestas, quis sollicitudin tellus aliquam. Nulla non libero ut arcu egestas porttitor a eget nulla. Sed a diam ut lectus rutrum sagittis vitae a mi. Praesent consequat dapibus velit. Ut nec nulla et ligula varius maximus sit amet eget magna. Vestibulum eros felis, finibus et lacinia faucibus, hendrerit et sem. Etiam ac placerat eros. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Proin vitae eros vitae nibh faucibus rutrum vel id justo. Etiam lacus nibh, iaculis quis tincidunt quis, elementum vel nibh. Etiam viverra ligula eu elementum feugiat. In quis augue vehicula, vehicula risus non, mattis est. Cras egestas fringilla orci sit amet fermentum. Vestibulum hendrerit augue euismod, cursus leo et, mollis nunc.</transcribed-text>
+        </same-row>
+    </transcribed-item> -->
+</body>
+</html>
