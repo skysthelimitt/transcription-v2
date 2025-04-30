@@ -39,7 +39,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 app.use(express.static('public'));
 
-app.post("/upload", handleUpload.single("audio"), async (req, res, next) => {
+async function processUpload(req, res) {
   // firstly, we check if the uploaded file contains any audio
   // this allows users to upload video files as well, and use any format supported by ffmpeg
   // which is how we will convert the audio into something supported by our speech to text model
@@ -111,7 +111,15 @@ app.post("/upload", handleUpload.single("audio"), async (req, res, next) => {
     res.sendStatus(400);
     fs.rmSync(req.file.path);
   }
-});
+}
+
+app.post("/upload", handleUpload.single("audio"), await processUpload);
+
+// simple 404 page.
+app.use((req, res, next) => {
+    res.status(404).send("Not found")
+})
+
 // simple 404 page.
 app.use((req, res, next) => {
     res.status(404).send("Not found")

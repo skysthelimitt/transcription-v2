@@ -1,5 +1,14 @@
-<form action="/upload" method="POST" enctype="multipart/form-data">
-    <input type="file" name="audio" required>
-    <button type="submit">Upload File</button>
-  </form>
-
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Upload Audio</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <form action="/upload" method="POST" enctype="multipart/form-data">
+        <label for="audio">Choose a video or audio lecture to upload.</label>
+        <input id='audio' type="file" name="audio" accept="audio/*, video/*" required>
+        <button type="submit">Upload File</button>
+      </form>
+  </body>
+</html>
